@@ -3,6 +3,7 @@
 int sum = 0;
 
 
+
 var numbers = Enum.GetValues(typeof(Numbers)).Cast<Numbers>().Select(e => e.ToString()).ToList();
 
 numbers.AddRange(Enumerable.Range(1, 9).Select(n => n.ToString()).ToList());
