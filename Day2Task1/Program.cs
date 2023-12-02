@@ -1,8 +1,8 @@
 ﻿var lines = File.ReadLines("input.txt");
 
-var games = lines.Select(CreateGame).ToList();
+var games = lines.Select(CreateGame);
 
-Console.WriteLine(games.Where(g => g.Valid).ToList().Sum(g => g.GameNumber));
+Console.WriteLine(games.Where(g => g.Valid).Sum(g => g.GameNumber));
 
 Console.ReadKey();
 return;
@@ -39,7 +39,6 @@ bool IsValid(Stones stone) => stone.Color switch
 
 List<Stones> CreateStones(string line)
 {
-
     var doo = line.Split(",");
 
     return doo.Select(CreateStone).ToList();
