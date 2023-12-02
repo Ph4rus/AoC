@@ -9,26 +9,23 @@ return;
 
 Game CreateGame(string line)
 {
-    var doo = line.Split(":");
+    var doo = line.Split(": ");
 
     var rounds = CreateRounds(doo.Last());
 
     return new Game(Convert.ToInt32(doo.First().Split(" ").Last()), rounds.All(c => c.Valid));
 }
 
-IEnumerable<Round> CreateRounds(string game)
+List<Round> CreateRounds(string game)
 {
-    var doo = game.Split(";");
+    var doo = game.Split("; ");
 
     return doo.Select(CreateStones).Select(stones => new Round(ValidateRound(stones))).ToList();
 }
 
-bool ValidateRound(IEnumerable<Stones> stones)
-{
-    var valid = stones.Select(IsValid).ToList();
+bool ValidateRound(List<Stones> stones)
+=> stones.Select(IsValid).All(c => c);
 
-    return valid.All(c => c);
-}
 
 bool IsValid(Stones stone) => stone.Color switch
 {
@@ -39,14 +36,14 @@ bool IsValid(Stones stone) => stone.Color switch
 
 List<Stones> CreateStones(string line)
 {
-    var doo = line.Split(",");
+    var doo = line.Split(", ");
 
     return doo.Select(CreateStone).ToList();
 }
 
 Stones CreateStone(string stones)
 {
-    var doo = stones.Trim().Split(" ");
+    var doo = stones.Split(" ");
 
     return new Stones(ParseEnum<Color>(doo.Last()), Convert.ToInt32(doo.First()));
 }
@@ -62,7 +59,6 @@ internal enum Color
     Red,
     Green
 }
-
 
 internal record Game(int GameNumber, bool Valid);
 
