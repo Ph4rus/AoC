@@ -13,14 +13,14 @@ Game CreateGame(string line)
 
     var rounds = CreateRounds(doo.Last());
 
-    return new Game(Convert.ToInt32(doo.First().Split(" ").Last()), rounds.All(c => c.Valid));
+    return new Game(int.Parse(doo.First().Split(" ").Last()), rounds.All(c => c.Valid));
 }
 
 List<Round> CreateRounds(string game)
 {
-    var doo = game.Split("; ");
+    var splitGame = game.Split("; ");
 
-    return doo.Select(CreateStones).Select(stones => new Round(ValidateRound(stones))).ToList();
+    return splitGame.Select(CreateStones).Select(stones => new Round(ValidateRound(stones))).ToList();
 }
 
 bool ValidateRound(List<Stones> stones)
@@ -36,16 +36,16 @@ bool IsValid(Stones stone) => stone.Color switch
 
 List<Stones> CreateStones(string line)
 {
-    var doo = line.Split(", ");
+    var stones = line.Split(", ");
 
-    return doo.Select(CreateStone).ToList();
+    return stones.Select(CreateStone).ToList();
 }
 
-Stones CreateStone(string stones)
+Stones CreateStone(string input)
 {
-    var doo = stones.Split(" ");
+    var stones = input.Split(" ");
 
-    return new Stones(ParseEnum<Color>(doo.Last()), Convert.ToInt32(doo.First()));
+    return new Stones(ParseEnum<Color>(stones.Last()), Convert.ToInt32(stones.First()));
 }
 
 static T ParseEnum<T>(string value)
